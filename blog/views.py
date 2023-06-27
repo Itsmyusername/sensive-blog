@@ -47,7 +47,7 @@ def index(request):
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
 
-    comments = post.comments.select_related('author').all()
+    comments = post.comments.select_related('author')
     serialized_comments = []
     for comment in comments:
         serialized_comments.append({
@@ -97,7 +97,7 @@ def tag_filter(request, tag_title):
         .fetch_with_tags()[:5] \
         .fetch_with_comments_count()
 
-    related_posts = tag.posts.all() \
+    related_posts = tag.posts \
         .fetch_with_tags()[:20] \
         .fetch_with_comments_count()
 
